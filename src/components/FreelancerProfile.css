@@ -1,0 +1,132 @@
+:root {
+  --bg: rgb(252, 247, 248);
+  --card: #e9e4dc;
+  --muted: black;
+  --accent: #4b73da;
+  --radius: 12px;
+  --shadow: 0 8px 30px rgba(12, 15, 30, 0.06);
+  --pad: 18px;
+  font-synthesis: none;
+}
+
+body {
+  background-color: var(--bg);
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.profile-page {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.profile-card {
+  background-color: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--pad);
+  max-width: 700px;
+  width: 100%;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--accent);
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-name {
+  margin: 0;
+  font-size: 1.8rem;
+  color: var(--muted);
+}
+
+.profile-title {
+  margin: 0.3rem 0 0;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.profile-section {
+  margin-bottom: 1.5rem;
+}
+
+.profile-section h3 {
+  margin-bottom: 0.5rem;
+  color: var(--accent);
+}
+
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.skills span {
+  background-color: var(--accent);
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+.portfolio {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.portfolio-card {
+  flex: 1 1 calc(33% - 1rem);
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  text-align: center;
+  min-width: 150px;
+}
+
+.profile-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.hire-btn, .message-btn {
+  padding: 0.8rem 2rem;
+  border-radius: var(--radius);
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.hire-btn {
+  background-color: var(--accent);
+  color: white;
+}
+
+.message-btn {
+  background-color: white;
+  color: var(--accent);
+  border: 2px solid var(--accent);
+}
+
+.hire-btn:hover, .message-btn:hover {
+  opacity: 0.9;
+}
