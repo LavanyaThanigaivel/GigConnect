@@ -1,0 +1,37 @@
+.gig-feed {
+  padding: 20px 0;
+}
+
+.gig-feed-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.gig-feed-header h1 {
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.gig-feed-header p {
+  color: #7f8c8d;
+  font-size: 18px;
+}
+
+.gigs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.no-gigs {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  color: #7f8c8d;
+}
+
+.no-gigs h3 {
+  margin-bottom: 10px;
+  color: #2c3e50;
+}

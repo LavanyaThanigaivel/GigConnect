@@ -1,0 +1,18 @@
+.messages {
+  padding: 20px 0;
+}
+
+.messages-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.messages-header h1 {
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.messages-header p {
+  color: #7f8c8d;
+  font-size: 18px;
+}
