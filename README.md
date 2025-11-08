@@ -1,3 +1,19 @@
+# GigConnect - Freelance Marketplace
+
+A full-stack MERN application connecting local freelancers with clients.
+
+## Features
+- User Authentication (Client/Freelancer)
+- Gig Posting & Management
+- Real-time Messaging
+- Advanced Search & Filtering
+- Secure Payments Integration
+
+## Quick Start
+
+1. Install dependencies:
+```bash
+npm run install:all
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
