@@ -71,14 +71,91 @@ const connectDB = async () => {
 io.on('connection', (socket) => {
   console.log('User connected:', socket.id);
 
-  socket.on('join_room', (roomId) => {
-    socket.join(roomId);
-    console.log(`User ${socket.id} joined room ${roomId}`);
+  // Join user to their personal room for notifications
+  socket.on('join_user', (userId) => {
+    socket.join(`user_${userId}`);
+    console.log(`User ${userId} joined their room`);
   });
 
-  socket.on('send_message', (data) => {
-    socket.to(data.roomId).emit('receive_message', data);
-    console.log('Message sent to room:', data.roomId);
+  socket.on('join_conversation', (conversationId) => {
+    socket.join(conversationId);
+    console.log(`User ${socket.id} joined conversation ${conversationId}`);
+  });
+
+  socket.on('send_message', async (data) => {
+    try {
+      // Save message to database
+      const Message = await import('./models/Message.js');
+      const Conversation = await import('./models/Conversation.js');
+      
+      let conversation = await Conversation.default.findById(data.conversationId);
+      
+      if (!conversation) {
+        // Create new conversation if it doesn't exist
+        conversation = new Conversation.default({
+          participants: [data.senderId, data.receiverId],
+          lastMessage: data.content,
+          lastMessageAt: new Date()
+        });
+        await conversation.save();
+        data.conversationId = conversation._id;
+      } else {
+        // Update conversation last message
+        conversation.lastMessage = data.content;
+        conversation.lastMessageAt = new Date();
+        await conversation.save();
+      }
+      
+      const message = new Message.default({
+        conversationId: data.conversationId,
+        senderId: data.senderId,
+        receiverId: data.receiverId,
+        content: data.content
+      });
+      
+      await message.save();
+      await message.populate('senderId', 'firstName lastName');
+      
+      // Add the saved message data to the emission
+      const messageData = {
+        ...data,
+        _id: message._id,
+        createdAt: message.createdAt,
+        senderId: {
+          _id: message.senderId._id,
+          firstName: message.senderId.firstName,
+          lastName: message.senderId.lastName
+        }
+      };
+      
+      // Emit to all users in the conversation
+      io.to(data.conversationId).emit('receive_message', messageData);
+      
+      // Notify the receiver if they're not in the conversation
+      socket.to(`user_${data.receiverId}`).emit('new_message_notification', {
+        conversationId: data.conversationId,
+        message: data.content,
+        sender: message.senderId
+      });
+      
+    } catch (error) {
+      console.error('Socket message error:', error);
+      socket.emit('message_error', { error: 'Failed to send message' });
+    }
+  });
+
+  socket.on('typing_start', (data) => {
+    socket.to(data.conversationId).emit('user_typing', {
+      userId: data.userId,
+      typing: true
+    });
+  });
+
+  socket.on('typing_stop', (data) => {
+    socket.to(data.conversationId).emit('user_typing', {
+      userId: data.userId,
+      typing: false
+    });
   });
 
   socket.on('disconnect', () => {

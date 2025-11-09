@@ -7,7 +7,7 @@ const router = express.Router();
 // Get all gigs with filters
 router.get('/', async (req, res) => {
   try {
-    const { search, skills, location, minPrice, maxPrice } = req.query;
+    const { search, skills, location, minPrice, maxPrice, limit } = req.query;
     
     let filter = { status: 'open' };
     
@@ -32,9 +32,15 @@ router.get('/', async (req, res) => {
       if (maxPrice) filter.budget.$lte = parseInt(maxPrice);
     }
     
-    const gigs = await Gig.find(filter)
+    let query = Gig.find(filter)
       .populate('client', 'firstName lastName rating')
       .sort({ createdAt: -1 });
+    
+    if (limit) {
+      query = query.limit(parseInt(limit));
+    }
+    
+    const gigs = await query;
     
     res.json(gigs);
   } catch (error) {
