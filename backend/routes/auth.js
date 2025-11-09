@@ -95,7 +95,35 @@ router.post('/login', async (req, res) => {
     res.status(500).json({ message: 'Server error during login' });
   }
 });
+// Add this route to your existing auth.js file
+router.post('/forgot-password', async (req, res) => {
+    try {
+        const { email } = req.body;
 
+        // Check if user exists
+        const user = await User.findOne({ email });
+        if (!user) {
+            // Don't reveal whether email exists or not for security
+            return res.json({ 
+                message: 'If an account with that email exists, password reset instructions have been sent.' 
+            });
+        }
+
+        // In a real app, you would:
+        // 1. Generate a reset token
+        // 2. Save it to the user document with expiration
+        // 3. Send email with reset link
+        // 4. Create a reset password endpoint
+
+        // For now, we'll just simulate success
+        res.json({ 
+            message: 'Password reset instructions have been sent to your email.' 
+        });
+    } catch (error) {
+        console.error('Forgot password error:', error);
+        res.status(500).json({ message: 'Server error processing request' });
+    }
+});
 // Get user profile
 router.get('/profile', async (req, res) => {
   try {
