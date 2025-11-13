@@ -16,7 +16,7 @@ export const gigService = {
             if (filters.status) params.append('status', filters.status);
             
             const response = await api.get(`/gigs?${params}`);
-            return response.data;
+            return response.data.filter(gig => gig && gig._id);
         } catch (error) {
             console.error('Error fetching gigs:', error);
             throw new Error(

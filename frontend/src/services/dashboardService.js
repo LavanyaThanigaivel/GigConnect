@@ -12,8 +12,8 @@ export const dashboardService = {
     } catch (error) {
       console.error('Error fetching dashboard stats:', error);
       throw new Error(
-        error.response?.data?.message || 
-        'Failed to load dashboard statistics. Please try again.'
+        error.response?.data?.message ||
+        'Failed to load dashboard statistics. Please try again.' 
       );
     }
   },
@@ -25,13 +25,12 @@ export const dashboardService = {
   async getRecentGigs(limit = 3) {
     try {
       const response = await api.get(`/gigs?limit=${limit}`);
-      return response.data;
+      // ✅ FIX: Filter out any null/undefined gigs and ensure they have _id
+      return response.data.filter(gig => gig && gig._id);
     } catch (error) {
       console.error('Error fetching recent gigs:', error);
-      throw new Error(
-        error.response?.data?.message || 
-        'Failed to load recent gigs. Please try again.'
-      );
+      // ✅ FIX: Return empty array instead of throwing to prevent app crash
+      return [];
     }
   },
 
@@ -45,20 +44,18 @@ export const dashboardService = {
       // For now, we'll calculate from existing data
       const userResponse = await api.get('/auth/profile');
       const user = userResponse.data;
-      
       const stats = await this.getStats();
       
       return {
         rating: user.rating || 0,
-        totalProjects: user.userType === 'freelancer' ? 
-          stats.activeGigs : stats.totalGigs,
+        totalProjects: user.userType === 'freelancer' ? stats.activeGigs : stats.totalGigs,
         responseRate: 98, // Mock data - could be calculated from message responses
         completionRate: 95 // Mock data - could be calculated from completed gigs
       };
     } catch (error) {
       console.error('Error fetching performance metrics:', error);
       throw new Error(
-        error.response?.data?.message || 
+        error.response?.data?.message ||
         'Failed to load performance metrics. Please try again.'
       );
     }
@@ -74,7 +71,7 @@ export const dashboardService = {
         this.getStats(),
         this.getRecentGigs(5)
       ]);
-
+      
       return {
         stats,
         recentGigs,
@@ -83,7 +80,7 @@ export const dashboardService = {
     } catch (error) {
       console.error('Error fetching dashboard overview:', error);
       throw new Error(
-        error.response?.data?.message || 
+        error.response?.data?.message ||
         'Failed to load dashboard overview. Please try again.'
       );
     }
@@ -104,7 +101,7 @@ export const dashboardService = {
         id: gig._id,
         type: 'gig_posted',
         title: gig.title,
-        description: `New gig posted by ${gig.client.firstName}`,
+        description: `New gig posted by ${gig.client?.firstName}`,
         timestamp: gig.createdAt,
         metadata: {
           budget: gig.budget,
@@ -117,7 +114,7 @@ export const dashboardService = {
     } catch (error) {
       console.error('Error fetching activity feed:', error);
       throw new Error(
-        error.response?.data?.message || 
+        error.response?.data?.message ||
         'Failed to load activity feed. Please try again.'
       );
     }
@@ -130,7 +127,6 @@ export const dashboardService = {
   async getEarningsSummary() {
     try {
       const stats = await this.getStats();
-      
       return {
         totalEarnings: stats.earnings || 0,
         pendingEarnings: stats.earnings * 0.2, // Mock data - 20% pending
@@ -140,7 +136,7 @@ export const dashboardService = {
     } catch (error) {
       console.error('Error fetching earnings summary:', error);
       throw new Error(
-        error.response?.data?.message || 
+        error.response?.data?.message ||
         'Failed to load earnings summary. Please try again.'
       );
     }
@@ -185,7 +181,7 @@ export const dashboardService = {
     } catch (error) {
       console.error('Error fetching notifications:', error);
       throw new Error(
-        error.response?.data?.message || 
+        error.response?.data?.message ||
         'Failed to load notifications. Please try again.'
       );
     }

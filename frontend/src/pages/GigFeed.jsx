@@ -11,7 +11,7 @@ function GigFeed() {
     skills: '',
     location: '',
     minPrice: '',
-    maxPrice: ''
+    maxPrice: '',
   });
 
   useEffect(() => {
@@ -48,7 +48,7 @@ function GigFeed() {
       skills: '',
       location: '',
       minPrice: '',
-      maxPrice: ''
+      maxPrice: '',
     });
     fetchGigs();
   };
@@ -76,7 +76,6 @@ function GigFeed() {
               onChange={handleFilterChange}
               className="search-input"
             />
-            
             <input
               type="text"
               name="skills"
@@ -85,7 +84,6 @@ function GigFeed() {
               onChange={handleFilterChange}
               className="filter-input"
             />
-            
             <input
               type="text"
               name="location"
@@ -105,7 +103,6 @@ function GigFeed() {
               onChange={handleFilterChange}
               className="price-input"
             />
-            
             <input
               type="number"
               name="maxPrice"
@@ -114,7 +111,6 @@ function GigFeed() {
               onChange={handleFilterChange}
               className="price-input"
             />
-            
             <button type="submit" className="btn-primary">Search</button>
             <button type="button" onClick={clearFilters} className="btn-secondary">
               Clear
@@ -132,44 +128,43 @@ function GigFeed() {
             <Link to="/" className="btn-primary">Back to Dashboard</Link>
           </div>
         ) : (
-          gigs.map(gig => (
-            <div key={gig._id} className="gig-card">
-              <div className="gig-card-header">
-                <h3>{gig.title}</h3>
-                <span className="budget">${gig.budget}</span>
+          gigs
+            .filter(gig => gig && gig._id) // ✅ FIX: Filter out null gigs
+            .map(gig => (
+              <div key={gig._id} className="gig-card">
+                <div className="gig-card-header">
+                  <h3>{gig.title}</h3>
+                  <span className="budget">${gig.budget}</span>
+                </div>
+                <p className="gig-description">
+                  {gig.description.length > 100 
+                    ? `${gig.description.substring(0, 100)}...` 
+                    : gig.description
+                  }
+                </p>
+                <div className="gig-meta">
+                  <span className="location">{gig.location}</span>
+                  <span className="duration">{gig.duration}</span>
+                </div>
+                <div className="skills-list">
+                  {gig.skillsRequired?.slice(0, 3).map((skill, index) => (
+                    <span key={index} className="skill-tag">{skill}</span>
+                  ))}
+                  {gig.skillsRequired?.length > 3 && (
+                    <span className="skill-tag">+{gig.skillsRequired.length - 3} more</span>
+                  )}
+                </div>
+                <div className="gig-card-footer">
+                  <span className="client">
+                    {/* ✅ FIX: Added optional chaining for client properties */}
+                    Posted by {gig.client?.firstName} {gig.client?.lastName}
+                  </span>
+                  <Link to={`/gigs/${gig._id}`} className="view-details-btn">
+                    View Details
+                  </Link>
+                </div>
               </div>
-              
-              <p className="gig-description">
-                {gig.description.length > 100 
-                  ? `${gig.description.substring(0, 100)}...` 
-                  : gig.description
-                }
-              </p>
-              
-              <div className="gig-meta">
-                <span className="location">📍 {gig.location}</span>
-                <span className="duration">⏱️ {gig.duration}</span>
-              </div>
-              
-              <div className="skills-list">
-                {gig.skillsRequired.slice(0, 3).map((skill, index) => (
-                  <span key={index} className="skill-tag">{skill}</span>
-                ))}
-                {gig.skillsRequired.length > 3 && (
-                  <span className="skill-tag">+{gig.skillsRequired.length - 3} more</span>
-                )}
-              </div>
-              
-              <div className="gig-card-footer">
-                <span className="client">
-                  Posted by {gig.client.firstName} {gig.client.lastName}
-                </span>
-                <Link to={`/gigs/${gig._id}`} className="view-details-btn">
-                  View Details
-                </Link>
-              </div>
-            </div>
-          ))
+            ))
         )}
       </div>
     </div>
