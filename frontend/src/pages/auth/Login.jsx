@@ -6,12 +6,12 @@ import '../../styles/Auth.css';
 function Login() {
   const [formData, setFormData] = useState({
     email: '',
-    password: ''
+    password: '',
   });
-  const [error, setError] = useState('');
+  const [error, setError] = useState(''); 
   const [loading, setLoading] = useState(false);
-  
-  const { login } = useAuth();
+
+  const { login } = useAuth(); 
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -30,7 +30,7 @@ function Login() {
       await login(formData.email, formData.password);
       navigate('/');
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed. Please try again.');
+      setError(err.response?.data?.message || 'Login failed. Please try again.'); 
     } finally {
       setLoading(false);
     }
@@ -41,10 +41,10 @@ function Login() {
       <div className="auth-card">
         <h2>Login to GigConnect</h2>
         {error && <div className="error-message">{error}</div>}
-        
+
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
-            <label htmlFor="email">Email</label>
+            <label htmlFor='email'>Email</label>
             <input
               type="email"
               id="email"
@@ -54,9 +54,9 @@ function Login() {
               required
             />
           </div>
-          
+
           <div className="form-group">
-            <label htmlFor="password">Password</label>
+            <label htmlFor='password'>Password</label>
             <input
               type="password"
               id="password"
@@ -66,16 +66,21 @@ function Login() {
               required
             />
           </div>
-          
-          <button 
-            type="submit" 
+
+          <button
+            type="submit"
             disabled={loading}
             className="auth-button"
           >
             {loading ? 'Logging in...' : 'Login'}
           </button>
+
+          {/* ✅ MOVED: Forgot password link under the button and centered */}
+          <div className="forgot-password-center">
+            <Link to="/forgot-password">Forgot your password?</Link>
+          </div>
         </form>
-        
+
         <p className="auth-link">
           Don't have an account? <Link to="/register">Sign up</Link>
         </p>

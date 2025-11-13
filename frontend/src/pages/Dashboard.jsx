@@ -83,120 +83,122 @@ function Dashboard() {
       </div>
 
       {/* Stats Overview */}
-      <div className="stats-overview">
-        <h2>Overview</h2>
-        <div className="stats-grid">
-          {user?.userType === 'freelancer' ? (
-            <>
-              <div className="stat-card">
-                <div className="stat-icon applications">
-                  <span>📄</span>
-                </div>
-                <div className="stat-info">
-                  <h3>{stats.totalApplications}</h3>
-                  <p>Total Applications</p>
-                </div>
-                <div className="stat-trend">
-                  <span className="trend-up">+2 this week</span>
-                </div>
-              </div>
-
-              <div className="stat-card">
-                <div className="stat-icon pending">
-                  <span>⏳</span>
-                </div>
-                <div className="stat-info">
-                  <h3>{stats.pendingApplications}</h3>
-                  <p>Pending Reviews</p>
-                </div>
-                <div className="stat-trend">
-                  <span className="trend-neutral">Waiting</span>
-                </div>
-              </div>
-
-              <div className="stat-card">
-                <div className="stat-icon earnings">
-                  <span>💰</span>
-                </div>
-                <div className="stat-info">
-                  <h3>${stats.earnings}</h3>
-                  <p>Total Earnings</p>
-                </div>
-                <div className="stat-trend">
-                  <span className="trend-up">+15%</span>
-                </div>
-              </div>
-
-              <div className="stat-card">
-                <div className="stat-icon messages">
-                  <span>💬</span>
-                </div>
-                <div className="stat-info">
-                  <h3>{stats.unreadMessages}</h3>
-                  <p>Unread Messages</p>
-                </div>
-                <div className="stat-trend">
-                  <span className="trend-up">New</span>
-                </div>
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="stat-card">
-                <div className="stat-icon gigs">
-                  <span>💼</span>
-                </div>
-                <div className="stat-info">
-                  <h3>{stats.totalGigs}</h3>
-                  <p>Total Gigs Posted</p>
-                </div>
-                <div className="stat-trend">
-                  <span className="trend-up">+1 this month</span>
-                </div>
-              </div>
-
-              <div className="stat-card">
-                <div className="stat-icon active">
-                  <span>🔥</span>
-                </div>
-                <div className="stat-info">
-                  <h3>{stats.activeGigs}</h3>
-                  <p>Active Gigs</p>
-                </div>
-                <div className="stat-trend">
-                  <span className="trend-up">Looking good</span>
-                </div>
-              </div>
-
-              <div className="stat-card">
-                <div className="stat-icon applications">
-                  <span>📄</span>
-                </div>
-                <div className="stat-info">
-                  <h3>{stats.totalApplications}</h3>
-                  <p>Total Applications</p>
-                </div>
-                <div className="stat-trend">
-                  <span className="trend-up">+5 today</span>
-                </div>
-              </div>
-
-              <div className="stat-card">
-                <div className="stat-icon messages">
-                  <span>💬</span>
-                </div>
-                <div className="stat-info">
-                  <h3>{stats.unreadMessages}</h3>
-                  <p>Unread Messages</p>
-                </div>
-                <div className="stat-trend">
-                  <span className="trend-up">New</span>
-                </div>
-              </div>
-            </>
-          )}
+<div className="stats-overview">
+  <h2>Overview</h2>
+  <div className="stats-grid">
+    {user?.userType === 'freelancer' ? (
+      <>
+        {/* Freelancer Stats - 2x2 Grid */}
+        <div className="stat-card">
+          <div className="stat-icon applications">
+            <span>📄</span>
+          </div>
+          <div className="stat-info">
+            <h3>{stats.totalApplications}</h3>
+            <p>Total Applications</p>
+          </div>
+          <div className="stat-trend">
+            <span className="trend-up">+2 this week</span>
+          </div>
         </div>
-      </div>
+
+        <div className="stat-card">
+          <div className="stat-icon pending">
+            <span>⏳</span>
+          </div>
+          <div className="stat-info">
+            <h3>{stats.pendingApplications}</h3>
+            <p>Pending Reviews</p>
+          </div>
+          <div className="stat-trend">
+            <span className="trend-neutral">Waiting</span>
+          </div>
+        </div>
+
+        <div className="stat-card">
+          <div className="stat-icon earnings">
+            <span>💰</span>
+          </div>
+          <div className="stat-info">
+            <h3>${stats.earnings}</h3>
+            <p>Total Earnings</p>
+          </div>
+          <div className="stat-trend">
+            <span className="trend-up">+15%</span>
+          </div>
+        </div>
+
+        <div className="stat-card">
+          <div className="stat-icon success">
+            <span>✅</span>
+          </div>
+          <div className="stat-info">
+            <h3>{stats.activeGigs}</h3>
+            <p>Active Projects</p>
+          </div>
+          <div className="stat-trend">
+            <span className="trend-up">In progress</span>
+          </div>
+        </div>
+      </>
+    ) : (
+      <>
+        {/* Client Stats - 2x2 Grid */}
+        <div className="stat-card">
+          <div className="stat-icon gigs">
+            <span>💼</span>
+          </div>
+          <div className="stat-info">
+            <h3>{stats.totalGigs}</h3>
+            <p>Total Gigs Posted</p>
+          </div>
+          <div className="stat-trend">
+            <span className="trend-up">+1 this month</span>
+          </div>
+        </div>
+
+        <div className="stat-card">
+          <div className="stat-icon active">
+            <span>🔥</span>
+          </div>
+          <div className="stat-info">
+            <h3>{stats.activeGigs}</h3>
+            <p>Active Gigs</p>
+          </div>
+          <div className="stat-trend">
+            <span className="trend-up">Looking good</span>
+          </div>
+        </div>
+
+        <div className="stat-card">
+          <div className="stat-icon applications">
+            <span>📨</span>
+          </div>
+          <div className="stat-info">
+            <h3>{stats.totalApplications}</h3>
+            <p>Total Applications</p>
+          </div>
+          <div className="stat-trend">
+            <span className="trend-up">+5 today</span>
+          </div>
+        </div>
+
+        <div className="stat-card">
+          <div className="stat-icon hires">
+            <span>🤝</span>
+          </div>
+          <div className="stat-info">
+            <h3>{stats.successfulHires || 3}</h3>
+            <p>Successful Hires</p>
+          </div>
+          <div className="stat-trend">
+            <span className="trend-up">Great matches</span>
+          </div>
+        </div>
+      </>
+    )}
+  </div>
+</div>
 
       {/* Quick Actions & Recent Activity */}
       <div className="dashboard-content">

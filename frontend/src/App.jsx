@@ -4,6 +4,7 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import Navbar from './components/common/Navbar';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
+import ForgotPassword from './pages/auth/ForgotPassword'; // ✅ NEW IMPORT
 import Dashboard from './pages/Dashboard';
 import GigFeed from './pages/GigFeed';
 import GigDetails from './pages/GigDetails';
@@ -26,6 +27,7 @@ function App() {
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} /> {/* ✅ NEW ROUTE */}
               <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
               <Route path="/gigs" element={<ProtectedRoute><GigFeed /></ProtectedRoute>} />
               <Route path="/gigs/create" element={<ProtectedRoute><CreateGig /></ProtectedRoute>} />

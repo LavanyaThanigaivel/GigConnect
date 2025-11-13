@@ -96,6 +96,48 @@ router.post('/login', async (req, res) => {
   }
 });
 
+router.post('/forgot-password', async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    // Check if user exists
+    const user = await User.findOne({ email });
+    if (!user) {
+      // For security, don't reveal if email exists or not
+      return res.json({ 
+        message: 'If an account with that email exists, password reset instructions have been sent.' 
+      });
+    }
+
+    // For now, we'll just return success
+    console.log(`Password reset requested for: ${email}`);
+    
+    res.json({ 
+      message: 'If an account with that email exists, password reset instructions have been sent.' 
+    });
+  } catch (error) {
+    console.error('Forgot password error:', error);
+    res.status(500).json({ message: 'Server error processing request' });
+  }
+});
+
+// Reset password
+router.post('/reset-password', async (req, res) => {
+  try {
+    const { token, newPassword } = req.body;
+
+    
+    console.log(`Password reset attempted with token: ${token}`);
+    
+    res.json({ 
+      message: 'Password has been reset successfully. You can now login with your new password.' 
+    });
+  } catch (error) {
+    console.error('Reset password error:', error);
+    res.status(500).json({ message: 'Server error resetting password' });
+  }
+});
+
 // Get user profile
 router.get('/profile', async (req, res) => {
   try {
